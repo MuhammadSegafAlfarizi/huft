@@ -27,9 +27,6 @@ if (!empty($_POST)) {
     if ($password == "") {
         $errors['password'] = "Password tidak boleh kosong";
     }
-    // if ($repeat_password == password) {
-    //     $errors['repeat_password'] = "Password tidak sama";
-    // }
 
     if (!$errors) {
         // cek duplikasi data

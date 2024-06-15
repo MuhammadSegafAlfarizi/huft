@@ -1,36 +1,43 @@
 <?php 
 
 include('inc/header.php');
+include('inc/koneksi.php');
+  
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
+    $deskripsi = isset($_POST['deskripsi']) ? $_POST['deskripsi'] : '';
+    $link = isset($_POST['link']) ? $_POST['link'] : '';
+    $gambar = isset($_FILES['gambar']) ? $_FILES['gambar'] : '';
 
-include ("koneksi.php");
-  
-$judul = $_POST['judul'];
-$deskripsi = $_POST['deskripsi'];
-$link = $_POST['link'];
-$gambar = $_POST['gambar'];
-  
-//Perintah Query untuk proses insert ke database
-  
-$sql_profil = "INSERT INTO beranda (judul, deskripsi, link, gambar)
-               VALUES ('$judul','$deskripsi','$link','$gambar')";
-  
-$sql = mysql_query($sql_profil) or die (mysql_error());
-  
-if($sql){
-    echo "Berhasil Simpan!
-          <meta http-equiv='refresh' content='3;url=post.php'>";
-} else {
-    echo "Gagal simpan!
-         <meta http-equiv='refresh' content='3;url=post.php'>";
-}
+    if ($judul && $deskripsi && $link && $gambar && $gambar['error'] === UPLOAD_ERR_OK) {
+        // Contoh penyimpanan data ke database
+        $conn = new mysqli("localhost", "username", "password", "database");
 
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        $stmt = $conn->prepare("INSERT INTO tb_images (judul, deskripsi, link, dataimage) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $judul, $deskripsi, $link, file_get_contents($gambar['tmp_name']));
+
+        if ($stmt->execute()) {
+            echo "Data berhasil disimpan.";
+            echo "<meta http-equiv='refresh' content='0; url=index.php'>";
+        } else {
+            echo "Terjadi kesalahan: " . $stmt->error;
+        }
+
+        $stmt->close();
+        $conn->close();
+    } else {
+        echo "Harap isi semua bidang dan pastikan tidak ada error dalam file upload.";
+    }
+}    
 ?>
 
 <div class="container-fluid">
-
     <h1 class="h3 mb-4 text-gray-800">Upload</h1>
-
-    <form>
+    <form method="POST" enctype="multipart/form-data">
         <div class="form-group row">
             <label for="inputHeader3" class="col-sm-2 col-form-label">Judul</label>
             <div class="col-sm-10">
@@ -62,7 +69,6 @@ if($sql){
             </div>
         </div>
     </form>
-
 </div>
 
-<?php include('inc/footer.php');?>
+<?php include('inc/footer.php'); ?>
