@@ -77,7 +77,7 @@ if (!empty($_POST)) {
                                             id="exampleRepeatPassword" placeholder="Repeat Password">
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-success">Simpan</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                             </form>
                             <hr>
                             <div class="text-center">

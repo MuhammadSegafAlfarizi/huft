@@ -1,43 +1,42 @@
 <?php 
 
 include('inc/header.php');
-include('inc/koneksi.php');
-  
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $judul = isset($_POST['judul']) ? $_POST['judul'] : '';
-    $deskripsi = isset($_POST['deskripsi']) ? $_POST['deskripsi'] : '';
-    $link = isset($_POST['link']) ? $_POST['link'] : '';
-    $gambar = isset($_FILES['gambar']) ? $_FILES['gambar'] : '';
 
-    if ($judul && $deskripsi && $link && $gambar && $gambar['error'] === UPLOAD_ERR_OK) {
-        // Contoh penyimpanan data ke database
-        $conn = new mysqli("localhost", "username", "password", "database");
+include ("inc/koneksi.php");
 
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+if(isset($_POST['submit'])){
 
-        $stmt = $conn->prepare("INSERT INTO tb_images (judul, deskripsi, link, dataimage) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("ssss", $judul, $deskripsi, $link, file_get_contents($gambar['tmp_name']));
-
-        if ($stmt->execute()) {
-            echo "Data berhasil disimpan.";
-            echo "<meta http-equiv='refresh' content='0; url=index.php'>";
-        } else {
-            echo "Terjadi kesalahan: " . $stmt->error;
-        }
-
-        $stmt->close();
-        $conn->close();
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+    $link = $_POST['link'];
+    $gambar = $_POST['gambar'];
+    
+    //Perintah Query untuk proses insert ke database
+    
+    $sql_profil = "INSERT INTO beranda (judul, deskripsi, link, gambar)
+                VALUES ('$judul','$deskripsi','$link','$gambar')";
+    
+    $query = mysqli_query($db, $sql_profil);
+    
+    if($query){
+        echo "Berhasil Simpan!
+            <meta http-equiv='refresh' content='3;url=index.php'>";
     } else {
-        echo "Harap isi semua bidang dan pastikan tidak ada error dalam file upload.";
+        echo "Gagal simpan!
+            <meta http-equiv='refresh' content='3;url=post.php'>";
+
     }
-}    
+
+}
+
+
 ?>
 
 <div class="container-fluid">
+
     <h1 class="h3 mb-4 text-gray-800">Upload</h1>
-    <form method="POST" enctype="multipart/form-data">
+
+    <form method="POST" >
         <div class="form-group row">
             <label for="inputHeader3" class="col-sm-2 col-form-label">Judul</label>
             <div class="col-sm-10">
@@ -53,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Link pembelian</label>
             <div class="col-sm-10">
-                <input name="link" type="url" class="form-control" id="inputEmail3" placeholder="Link pembelian">
+                <input name="link" type="text" class="form-control" id="inputEmail3" placeholder="Link pembelian">
             </div>
         </div>
         <div class="form-group row">
@@ -65,10 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Upload</button>
+                <button type="submit" name="submit" class="btn btn-primary">Upload</button>
             </div>
         </div>
     </form>
+
 </div>
 
-<?php include('inc/footer.php'); ?>
+<?php include('inc/footer.php');?>
