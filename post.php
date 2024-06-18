@@ -1,8 +1,8 @@
 <?php 
 
-include('inc/header.php');
-
+include('inc/session_start.php');
 include ("inc/koneksi.php");
+include('inc/header.php');
 
 if(isset($_POST['submit'])){
 
@@ -13,18 +13,17 @@ if(isset($_POST['submit'])){
     
     //Perintah Query untuk proses insert ke database
     
-    $sql_profil = "INSERT INTO beranda (judul, deskripsi, link, gambar)
+    $sql_beranda = "INSERT INTO beranda (judul, deskripsi, link, gambar)
                 VALUES ('$judul','$deskripsi','$link','$gambar')";
     
-    $query = mysqli_query($db, $sql_profil);
+    $query = mysqli_query($db, $sql_beranda);
     
     if($query){
-        echo "Berhasil Simpan!
-            <meta http-equiv='refresh' content='3;url=index.php'>";
+        echo "<script>alert('Data berhasil disimpan!'); window.location.href = 'index.php';</script>";
+        exit();
     } else {
-        echo "Gagal simpan!
-            <meta http-equiv='refresh' content='3;url=post.php'>";
-
+        echo "<script>alert('Data gagal disimpan!'); window.location.href = 'post.php';</script>";
+        exit();
     }
 
 }

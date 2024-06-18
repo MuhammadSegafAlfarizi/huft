@@ -1,10 +1,16 @@
-<?php include('inc/header.php');?>
+<?php 
+
+include('inc/session_start.php');
+include('inc/koneksi.php');
+include('inc/header.php');
+
+?>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <h1 class="h3 mb-4 text-gray-800">Beranda</h1>      
-
+    <h1 class="h3 mb-4 text-gray-800">Beranda</h1><br>      
+    <?php echo $_SESSION['email']; ?>
     <!-- Content Row -->
     <div class="row">
 
