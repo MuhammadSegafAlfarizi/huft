@@ -1,41 +1,50 @@
-<?php 
-
+<?php
 include('inc/session_start.php');
-include ("inc/koneksi.php");
+include('inc/koneksi.php');
 include('inc/header.php');
 
-if(isset($_POST['submit'])){
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     $judul = $_POST['judul'];
     $deskripsi = $_POST['deskripsi'];
     $link = $_POST['link'];
-    $gambar = $_POST['gambar'];
-    
-    //Perintah Query untuk proses insert ke database
-    
-    $sql_beranda = "INSERT INTO beranda (judul, deskripsi, link, gambar)
-                VALUES ('$judul','$deskripsi','$link','$gambar')";
-    
-    $query = mysqli_query($db, $sql_beranda);
-    
-    if($query){
-        echo "<script>alert('Data berhasil disimpan!'); window.location.href = 'index.php';</script>";
-        exit();
-    } else {
-        echo "<script>alert('Data gagal disimpan!'); window.location.href = 'post.php';</script>";
-        exit();
-    }
+    $image = $_FILES['image']['tmp_name'];
 
+    if ($image) {
+        // Mengambil konten file gambar
+        $imgContent = file_get_contents($image);
+
+        // Membuat prepared statement
+        $stmt = $db->prepare("INSERT INTO beranda (judul, deskripsi, link, gambar) VALUES (?, ?, ?, ?)");
+
+        // Memeriksa apakah prepare berhasil
+        if ($stmt === false) {
+            die('Prepare failed: ' . htmlspecialchars($db->error));
+        }
+
+        // Mengikat parameter ke placeholder
+        $stmt->bind_param("ssss", $judul, $deskripsi, $link, $imgContent);
+
+        // Menjalankan pernyataan
+        if ($stmt->execute()) {
+            echo "<script>alert('Data berhasil disimpan!'); window.location.href = 'index.php';</script>";
+        } else {
+            echo "<script>alert('Data gagal disimpan!'); window.location.href = 'post.php';</script>";
+            exit();
+        }
+
+        // Menutup statement
+        $stmt->close();
+    } else {
+        echo "<script>alert('Gambar tidak valid!'); window.location.href = 'post.php';</script>";
+    }
 }
 
-
+$db->close();
 ?>
 
 <div class="container-fluid">
-
     <h1 class="h3 mb-4 text-gray-800">Upload</h1>
-
-    <form method="POST" >
+    <form method="POST" enctype="multipart/form-data">
         <div class="form-group row">
             <label for="inputHeader3" class="col-sm-2 col-form-label">Judul</label>
             <div class="col-sm-10">
@@ -55,9 +64,9 @@ if(isset($_POST['submit'])){
             </div>
         </div>
         <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Gambar</label>
+            <label for="exampleFormControlFile1" class="col-sm-2 col-form-label">Gambar</label>
             <div class="col-sm-10">
-                <input name="gambar" type="file" class="form-control-file" id="exampleFormControlFile1"> 
+                <input name="image" type="file" class="form-control-file" id="exampleFormControlFile1">
             </div>
         </div>
         <div class="form-group row">
@@ -67,7 +76,6 @@ if(isset($_POST['submit'])){
             </div>
         </div>
     </form>
-
 </div>
 
-<?php include('inc/footer.php');?>
+<?php include('inc/footer.php'); ?>

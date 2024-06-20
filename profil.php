@@ -2,7 +2,7 @@
 
 include('inc/session_start.php');
 include('inc/koneksi.php');
-include('inc/header.php');
+include('inc/header_without.php');
 
 if (!isset($_SESSION['id_register'])) {
     echo "<script>alert('Anda harus login terlebih dahulu!'); window.location.href = 'login.php';</script>";
@@ -44,12 +44,6 @@ if (mysqli_num_rows($result) > 0) {
                                             <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                                             <div class="col-sm-10">
                                             <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?php echo htmlspecialchars($user['email']); ?>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                                            <div class="col-sm-10">
-                                            <input type="text" readonly class="form-control-plaintext" id="inputPassword" value="<?php echo htmlspecialchars($user['password']); ?>">
                                             </div>
                                         </div>
                                     </form>

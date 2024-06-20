@@ -31,9 +31,9 @@ if(isset($_POST['submit'])){
                                 <button name="submit" type="submit" class="btn btn-primary">Simpan</button>
                             </form>
                             <hr>
-                            <div class="text-center">
+                            <!-- <div class="text-center">
                                 <a class="small" href="forgot-password.php">Forgot Password?</a>
-                            </div>
+                            </div> -->
                             <div class="text-center">
                                 <a class="small" href="login.php">Already have an account? Login!</a>
                             </div>
