@@ -23,7 +23,7 @@ ini_set('display_errors', 1);
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <h1 class="h3 mb-4 text-gray-800">OOTD yang tersimpan</h1>
+    <h1 class="h3 mb-4 text-gray-800">OOTD Yang Tersimpan</h1>
 
     <!-- Content Row -->
     <div class="row">

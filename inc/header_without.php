@@ -20,6 +20,26 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style>
+        .sidebar-brand-icon {
+            position: relative;
+            display: inline-block;
+            width: 2em; /* Adjust the container size as needed */
+            height: 2em; /* Adjust the container size as needed */
+        }
+
+        .sidebar-brand-icon img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%; /* Make the image fill the container */
+            height: 100%; /* Make the image fill the container */
+            transform: translate(-50%, -50%);
+            object-fit: cover; /* Ensure the image covers the container without distortion */
+            border-radius: 50%; /* Make the image circular */
+        }
+    </style>
+
 </head>
 
 <body id="page-top">
@@ -32,8 +52,8 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    <img class="img-profile rounded-circle" src="img/logo.jpg" alt="Profile Image">
                 </div>
             </a>
 
@@ -54,6 +74,12 @@
             <div class="sidebar-heading">
                 Menu
             </div>
+
+            <li class="nav-item">
+                <a class="nav-link" href="cari.php">
+                    <i class="fas fa-fw fa-search"></i>
+                    <span>Cari</span></a>
+            </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -127,8 +153,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['email']; ?></span>
-                                <img class="img-profile rounded-circle"src="img/ega.jpg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['name']; ?></span>
+                                <img class="img-profile rounded-circle"src="img/poto.webp">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

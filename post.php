@@ -1,7 +1,7 @@
 <?php
 include('inc/session_start.php');
 include('inc/koneksi.php');
-include('inc/header.php');
+include('inc/header_without.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['image'])) {
     $judul = $_POST['judul'];

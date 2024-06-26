@@ -37,6 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pin'])) {
         <?php
         $result = $db->query("SELECT * FROM beranda");
         while ($row = $result->fetch_assoc()) {
+            $link = $row['link'];
+            // Tambahkan http:// jika tidak ada protokol pada link
+            if (strpos($link, 'http://') !== 0 && strpos($link, 'https://') !== 0) {
+                $link = 'http://' . $link;
+            }
+
             echo '
             <div class="col-lg-6 mb-4">
                 <div class="card shadow mb-4">
@@ -47,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pin'])) {
                                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <!-- Tambahkan form untuk menambahkan pin -->
                                 <form method="POST" action="">
                                     <input type="hidden" name="id_beranda" value="' . $row['id_beranda'] . '">
                                     <button type="submit" name="pin" class="dropdown-item">Tambahkan ke Pin</button>
@@ -59,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pin'])) {
                             <img class="img-fluid px-3 px-sm-4 mt-3 mb-4 rounded" style="width: 20rem;" src="data:image/jpeg;base64,' . base64_encode($row['gambar']) . '" alt="...">
                         </div>
                         <p>' . htmlspecialchars($row['deskripsi']) . '</p>
-                        <a target="_blank" rel="nofollow" href="' . htmlspecialchars($row['link']) . '">Link ecommerce</a>
+                        <a target="_blank" rel="nofollow" href="' . htmlspecialchars($link) . '">Link ecommerce</a>
                     </div>
                 </div>
             </div>';

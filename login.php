@@ -1,3 +1,4 @@
+
 <?php 
 
 session_start();
@@ -36,17 +37,17 @@ $db->close();
 ?>
 
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Selamat Datang!</h1>
                                     </div>
                                     <form class="user" method="POST">
                                         <div class="form-group">
                                             <input name="email" type="text" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                                placeholder="Masukkan Alamat Email...">
                                         </div>
                                         <div class="form-group">
                                             <input name="password" type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="exampleInputPassword" placeholder="Masukkan Password">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -62,7 +63,7 @@ $db->close();
                                         <a class="small" href="forgot-password.php">Forgot Password?</a>
                                     </div> -->
                                     <div class="text-center">
-                                        <a class="small" href="register.php">Create an Account!</a>
+                                        <a class="small" href="register.php">Buat Akun!</a>
                                     </div>
                                 
 <?php include('inc/login_footer.php');?>
